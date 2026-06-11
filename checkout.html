@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Clubtickets</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="checkout-page">
+  <header class="ticket-header">
+    <a class="brand" href="index.html" aria-label="Clubtickets">
+      <img src="img/logo-header_biza.svg" alt="Clubtickets">
+    </a>
+    <button class="ticket-menu" type="button" aria-label="Menú">
+      <img src="img/logo-menu_biza.svg" alt="">
+    </button>
+  </header>
+
+  <main class="checkout-main">
+    <div class="checkout-grid">
+      <!-- Left Column: Forms -->
+      <div class="checkout-left">
+        <section class="checkout-card buyer-info-card">
+          <h2>Datos comprador</h2>
+          <p class="buyer-info-desc">
+            El nombre y apellidos del comprador será impreso en las entradas. 
+            <strong>Es obligatorio que el comprador acuda al evento con el grupo.</strong>
+          </p>
+
+          <form id="buyerForm" class="buyer-form">
+            <div class="form-row">
+              <input type="text" id="nombre" placeholder="Nombre" required>
+              <input type="text" id="apellidos" placeholder="Apellidos" required>
+            </div>
+            
+            <div class="form-row">
+              <input type="email" id="email" placeholder="ejemplo@gmail.com" required>
+              <input type="email" id="confirmEmail" placeholder="Confirmar email" required>
+            </div>
+
+            <div class="phone-input-container">
+              <div class="country-select" id="countrySelect">
+                <span class="flag">🇬🇧</span>
+                <span class="dropdown-arrow">▼</span>
+              </div>
+              <input type="tel" id="telefono" placeholder="Teléfono" required>
+            </div>
+
+            <div class="consent-checkboxes">
+              <label class="custom-checkbox-label">
+                <input type="checkbox" id="consentMarketing">
+                <span class="checkbox-circle"></span>
+                <span class="checkbox-text">
+                  Acepto recibir ofertas, descuentos y comunicación comercial por cualquier medio de parte de los Co-responsables de Tratamiento: Only Tickets SL, Ushuaïa Entertainments SL y The Night League SL
+                </span>
+              </label>
+
+              <label class="custom-checkbox-label">
+                <input type="checkbox" id="consentTerms" required>
+                <span class="checkbox-circle"></span>
+                <span class="checkbox-text">
+                  Acepto los <a href="#" target="_blank">Términos y Condiciones de Clubtickets</a> y los <a href="#" target="_blank">Términos y Condiciones de Ushuaïa Entertainment</a>
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>Continuar</button>
+          </form>
+        </section>
+
+        <!-- Collapsed Payment Section -->
+        <section class="checkout-card collapsed-payment-card">
+          <h2>Método de pago</h2>
+        </section>
+      </div>
+
+      <!-- Right Column: Cart -->
+      <div class="checkout-right">
+        <section class="checkout-card cart-card">
+          <div class="cart-header-action">
+            <a href="entradas.html" class="continue-shopping-btn">Continuar comprando</a>
+          </div>
+
+          <div class="cart-title-row">
+            <h2>Contenido del carrito</h2>
+            <button class="icon-btn clear-cart-btn" type="button" aria-label="Vaciar carrito">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div class="cart-items-container">
+            <!-- Event header block -->
+            <div class="cart-event-block">
+              <div class="cart-event-title-row">
+                <span class="cart-event-date">sáb 13 jun</span>
+                <button class="icon-btn remove-event-btn" type="button" aria-label="Eliminar evento">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="cart-event-details">
+                <p class="cart-event-venue">Hï Ibiza</p>
+                <p class="cart-event-artist">Black Coffee</p>
+              </div>
+            </div>
+
+            <!-- Ticket rows -->
+            <div class="cart-item-row">
+              <div class="cart-item-desc">
+                <span class="cart-item-qty">1 x</span>
+                <span class="cart-item-name">Entry before 1am - 1st Release</span>
+                <button class="icon-btn remove-item-btn" type="button" aria-label="Eliminar entrada">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="cart-item-price">85,00 €</div>
+            </div>
+          </div>
+
+          <div class="cart-total-divider"></div>
+
+          <div class="cart-total-row">
+            <span>Total</span>
+            <strong class="cart-total-val">85,00 €</strong>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="checkout.js"></script>
+</body>
+</html>

@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (!footer) return;
 
+  const checkoutBtn = footer.querySelector('.checkout-footer-btn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+      window.location.href = 'checkout.html';
+    });
+  }
+
   function updateFooter() {
     let totalItems = 0;
     let totalPrice = 0;
