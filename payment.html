@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment | Clubtickets</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .payment-page {
+      background: #bbc0f9;
+      min-height: 100vh;
+    }
+
+    .payment-main {
+      padding: 110px 40px 40px;
+      width: 100%;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 52px;
+      margin: 0 auto;
+      max-width: 1400px;
+      width: 100%;
+    }
+
+    .payment-left,
+    .payment-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .payment-card {
+      background: #fffffff2;
+      border-radius: 18px;
+      box-shadow: 0 18px 70px #00000012;
+      overflow: hidden;
+      padding: 32px 36px;
+    }
+
+    .payment-card h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 20px;
+      color: #000;
+    }
+
+    .payment-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 20px;
+      color: #000;
+    }
+
+    .buyer-field {
+      margin-bottom: 16px;
+    }
+
+    .buyer-field label {
+      color: #666;
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .buyer-field p {
+      color: #000;
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .buyer-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .payment-option {
+      align-items: center;
+      border: 1px solid #e4e4e8;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 14px;
+      padding: 18px 22px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .payment-option:hover {
+      background: #f9f9fb;
+    }
+
+    .payment-option.selected {
+      border-color: #000;
+      background: #f5f5f7;
+    }
+
+    .payment-option input {
+      accent-color: #000;
+      height: 22px;
+      width: 22px;
+    }
+
+    .payment-option .pay-icon {
+      color: #666;
+      flex-shrink: 0;
+    }
+
+    .payment-option .pay-label {
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    /* Right column */
+    .payment-right-card {
+      background: #fffffff2;
+      border-radius: 18px;
+      box-shadow: 0 18px 70px #00000012;
+      overflow: hidden;
+    }
+
+    .timer-bar {
+      align-items: center;
+      background: #f2f2f2;
+      border-bottom: 1px solid #e4e4e8;
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 32px;
+    }
+
+    .timer-label {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .timer-val {
+      color: #e11d48;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid #e4e4e8;
+    }
+
+    .total-row strong {
+      font-size: 20px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .card-form {
+      padding: 28px 32px 32px;
+    }
+
+    .card-form-header {
+      align-items: center;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .card-form-header h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .card-logos {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .card-logo {
+      background: #f2f2f2;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 6px;
+    }
+
+    .card-form-row {
+      margin-bottom: 20px;
+    }
+
+    .card-form-row label {
+      color: #333;
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card-form-row input {
+      border: 1px solid #d8d8d8;
+      border-radius: 10px;
+      font-size: 15px;
+      height: 48px;
+      padding: 0 14px;
+      width: 100%;
+      background: #fff;
+      color: #000;
+      outline: none;
+    }
+
+    .card-form-row input:focus {
+      border-color: #000;
+    }
+
+    .card-form-row .input-hint {
+      color: #999;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .card-form-dual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .card-form-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn-cancel {
+      background: #9ca3af;
+      border: 0;
+      border-radius: 12px;
+      color: #fff;
+      cursor: pointer;
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      height: 50px;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-cancel:hover {
+      opacity: 0.9;
+    }
+
+    .btn-pay {
+      background: #a5b4fc;
+      border: 0;
+      border-radius: 12px;
+      color: #fff;
+      cursor: pointer;
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      height: 50px;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-pay:not(:disabled) {
+      background: var(--black);
+    }
+
+    .btn-pay:not(:disabled):hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 900px) {
+      .payment-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .payment-main {
+        padding: 80px 20px 30px;
+      }
+
+      .payment-card {
+        padding: 24px;
+      }
+
+      .card-form {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body class="payment-page">
+  <header class="ticket-header">
+    <a class="brand" href="index.html" aria-label="Clubtickets">
+      <img src="img/logo-header_biza.svg" alt="Clubtickets">
+    </a>
+    <button class="ticket-menu" type="button" aria-label="Menu">
+      <img src="img/logo-menu_biza.svg" alt="">
+    </button>
+  </header>
+
+  <main class="payment-main">
+    <div class="payment-grid">
+      <!-- Left Column -->
+      <div class="payment-left">
+        <!-- Buyer Data -->
+        <section class="payment-card" id="buyerCard">
+          <h2>Buyer data</h2>
+          <div id="buyerFields"></div>
+        </section>
+
+        <!-- Payment Method -->
+        <section class="payment-card payment-methods">
+          <h3>Payment method</h3>
+
+          <label class="payment-option selected" data-method="card">
+            <input type="radio" name="paymentMethod" value="card" checked>
+            <svg class="pay-icon" width="28" height="22" viewBox="0 0 28 22" fill="none">
+              <rect x="1" y="3" width="26" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+              <line x1="1" y1="9" x2="27" y2="9" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span class="pay-label">Credit card</span>
+          </label>
+
+          <label class="payment-option" data-method="gpay">
+            <input type="radio" name="paymentMethod" value="gpay">
+            <svg class="pay-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span class="pay-label">G Pay</span>
+          </label>
+        </section>
+      </div>
+
+      <!-- Right Column: Timer + Card Form -->
+      <div class="payment-right">
+        <div class="payment-right-card">
+          <div class="timer-bar">
+            <span class="timer-label">Remaining time:</span>
+            <span class="timer-val" id="timerVal">14:51</span>
+          </div>
+
+          <div class="total-row">
+            <strong id="totalPrice">0,00 €</strong>
+          </div>
+
+          <form class="card-form" id="cardForm">
+            <div class="card-form-header">
+              <h4>Payment by Card</h4>
+              <div class="card-logos">
+                <span class="card-logo">VISA</span>
+                <span class="card-logo">MC</span>
+                <span class="card-logo">Amex</span>
+              </div>
+            </div>
+
+            <div class="card-form-row">
+              <label>Card Number:</label>
+              <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+            </div>
+
+            <div class="card-form-dual">
+              <div class="card-form-row">
+                <label>Expiry Date:</label>
+                <input type="text" id="expiryDate" placeholder="mm / yy" maxlength="7" required>
+              </div>
+              <div class="card-form-row">
+                <label>CVV:</label>
+                <input type="text" id="cvv" placeholder="123" maxlength="4" required>
+              </div>
+            </div>
+
+            <div class="card-form-actions">
+              <button type="button" class="btn-cancel" id="btnCancel">Cancel</button>
+              <button type="submit" class="btn-pay" id="btnPay" disabled>Pay</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <button class="chat" aria-label="Help">
+    <img src="img/bizar-help.webp" alt="Help">
+  </button>
+  <button class="cookies" aria-label="Cookies">
+    <img src="img/cookies_biza.png" alt="Cookies">
+  </button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Render buyer data
+      const buyerData = JSON.parse(localStorage.getItem('clubticketsBuyer') || 'null');
+      const buyerFields = document.getElementById('buyerFields');
+      if (buyerData && buyerFields) {
+        buyerFields.innerHTML = `
+          <div class="buyer-row">
+            <div class="buyer-field">
+              <label>Name</label>
+              <p>${buyerData.firstName || ''}</p>
+            </div>
+            <div class="buyer-field">
+              <label>Surname</label>
+              <p>${buyerData.lastName || ''}</p>
+            </div>
+          </div>
+          <div class="buyer-field">
+            <label>Email</label>
+            <p>${buyerData.email || ''}</p>
+          </div>
+          <div class="buyer-field">
+            <label>Phone</label>
+            <p>${buyerData.dial || ''} ${buyerData.phone || ''}</p>
+          </div>
+        `;
+      }
+
+      // Render total from cart
+      const cartData = JSON.parse(localStorage.getItem('clubticketsCart') || 'null');
+      const totalPrice = document.getElementById('totalPrice');
+      if (cartData && totalPrice && cartData.tickets) {
+        const total = cartData.tickets.reduce((sum, t) => sum + (t.qty * t.price), 0);
+        totalPrice.textContent = `${total.toFixed(2).replace('.', ',')} €`;
+      }
+
+      // Countdown timer (15 minutes)
+      const timerVal = document.getElementById('timerVal');
+      let seconds = 15 * 60;
+      const interval = setInterval(() => {
+        seconds--;
+        if (seconds <= 0) {
+          clearInterval(interval);
+          timerVal.textContent = '00:00';
+          return;
+        }
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        timerVal.textContent = `${m}:${s}`;
+      }, 1000);
+
+      // Payment option selection
+      document.querySelectorAll('.payment-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          opt.querySelector('input').checked = true;
+        });
+      });
+
+      // Card form validation
+      const cardNumber = document.getElementById('cardNumber');
+      const expiryDate = document.getElementById('expiryDate');
+      const cvv = document.getElementById('cvv');
+      const btnPay = document.getElementById('btnPay');
+
+      function validateCard() {
+        const hasCard = cardNumber.value.trim().length >= 13;
+        const hasExpiry = expiryDate.value.trim().length >= 5;
+        const hasCvv = cvv.value.trim().length >= 3;
+        btnPay.disabled = !(hasCard && hasExpiry && hasCvv);
+      }
+
+      [cardNumber, expiryDate, cvv].forEach(input => {
+        input.addEventListener('input', validateCard);
+      });
+
+      // Format card number
+      cardNumber.addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+        val = val.substring(0, 16);
+        let formatted = '';
+        for (let i = 0; i < val.length; i++) {
+          if (i > 0 && i % 4 === 0) formatted += ' ';
+          formatted += val[i];
+        }
+        e.target.value = formatted;
+      });
+
+      // Format expiry
+      expiryDate.addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+        if (val.length >= 2) {
+          val = val.substring(0, 2) + ' / ' + val.substring(2);
+        }
+        e.target.value = val;
+      });
+
+      // Cancel
+      document.getElementById('btnCancel').addEventListener('click', () => {
+        if (confirm('Are you sure you want to cancel this purchase?')) {
+          window.location.href = 'entradas.html';
+        }
+      });
+
+      // Pay submit
+      document.getElementById('cardForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Payment processed successfully!');
+      });
+    });
+  </script>
+</body>
+</html>

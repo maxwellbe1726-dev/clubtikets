@@ -8,15 +8,81 @@ document.addEventListener('DOMContentLoaded', () => {
   const consentTerms = document.getElementById('consentTerms');
   const submitBtn = document.getElementById('submitBtn');
 
-  // Country code selector toggle simulation
+  // Country dropdown
   const countrySelect = document.getElementById('countrySelect');
-  const flags = ['🇬🇧', '🇪🇸', '🇺🇸', '🇫🇷', '🇩🇪'];
-  let currentFlagIndex = 0;
+  const countryDropdown = document.getElementById('countryDropdown');
+  const selectedFlag = document.getElementById('selectedFlag');
+  const selectedDial = document.getElementById('selectedDial');
+
+  const countries = [
+    { flag: '🇬🇧', name: 'United Kingdom', dial: '+44' },
+    { flag: '🇪🇸', name: 'Spain', dial: '+34' },
+    { flag: '🇺🇸', name: 'United States', dial: '+1' },
+    { flag: '�🇪', name: 'Germany', dial: '+49' },
+    { flag: '�🇷', name: 'France', dial: '+33' },
+    { flag: '🇮🇹', name: 'Italy', dial: '+39' },
+    { flag: '🇳🇱', name: 'Netherlands', dial: '+31' },
+    { flag: '🇧🇪', name: 'Belgium', dial: '+32' },
+    { flag: '🇨🇭', name: 'Switzerland', dial: '+41' },
+    { flag: '🇦🇹', name: 'Austria', dial: '+43' },
+    { flag: '🇵🇹', name: 'Portugal', dial: '+351' },
+    { flag: '🇸🇪', name: 'Sweden', dial: '+46' },
+    { flag: '🇳🇴', name: 'Norway', dial: '+47' },
+    { flag: '🇩�', name: 'Denmark', dial: '+45' },
+    { flag: '🇫🇮', name: 'Finland', dial: '+358' },
+    { flag: '🇮�', name: 'Ireland', dial: '+353' },
+    { flag: '🇵🇱', name: 'Poland', dial: '+48' },
+    { flag: '🇬🇷', name: 'Greece', dial: '+30' },
+    { flag: '🇹🇷', name: 'Turkey', dial: '+90' },
+    { flag: '🇷🇺', name: 'Russia', dial: '+7' },
+    { flag: '🇨🇦', name: 'Canada', dial: '+1' },
+    { flag: '🇦🇺', name: 'Australia', dial: '+61' },
+    { flag: '🇧🇷', name: 'Brazil', dial: '+55' },
+    { flag: '🇲🇽', name: 'Mexico', dial: '+52' },
+    { flag: '🇦🇷', name: 'Argentina', dial: '+54' },
+    { flag: '🇨🇴', name: 'Colombia', dial: '+57' },
+    { flag: '🇮🇳', name: 'India', dial: '+91' },
+    { flag: '🇨🇳', name: 'China', dial: '+86' },
+    { flag: '🇯🇵', name: 'Japan', dial: '+81' },
+    { flag: '🇰🇷', name: 'South Korea', dial: '+82' },
+    { flag: '🇿🇦', name: 'South Africa', dial: '+27' },
+    { flag: '🇦🇪', name: 'United Arab Emirates', dial: '+971' },
+    { flag: '🇸🇦', name: 'Saudi Arabia', dial: '+966' },
+  ];
+
+  function renderCountryDropdown() {
+    if (!countryDropdown) return;
+    countryDropdown.innerHTML = countries.map(c => `
+      <div class="country-dropdown-item" data-dial="${c.dial}" data-flag="${c.flag}">
+        <span class="flag">${c.flag}</span>
+        <span class="name">${c.name}</span>
+        <span class="dial">${c.dial}</span>
+      </div>
+    `).join('');
+
+    countryDropdown.querySelectorAll('.country-dropdown-item').forEach(item => {
+      item.addEventListener('click', () => {
+        selectedFlag.textContent = item.dataset.flag;
+        selectedDial.textContent = item.dataset.dial;
+        countryDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  renderCountryDropdown();
 
   if (countrySelect) {
-    countrySelect.addEventListener('click', () => {
-      currentFlagIndex = (currentFlagIndex + 1) % flags.length;
-      countrySelect.querySelector('.flag').textContent = flags[currentFlagIndex];
+    countrySelect.addEventListener('click', (e) => {
+      e.stopPropagation();
+      countryDropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', () => {
+      countryDropdown.classList.remove('open');
+    });
+
+    countryDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
     });
   }
 
@@ -50,10 +116,18 @@ document.addEventListener('DOMContentLoaded', () => {
   
   consentTerms.addEventListener('change', validateForm);
 
-  // Form submit simulation
+  // Form submit → save buyer data + redirect to payment page
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('¡Formulario enviado con éxito! Redirigiendo a pasarela de pago simulada...');
+    const buyerData = {
+      firstName: nombre.value.trim(),
+      lastName: apellidos.value.trim(),
+      email: email.value.trim(),
+      phone: telefono.value.trim(),
+      dial: selectedDial ? selectedDial.textContent.trim() : '+44'
+    };
+    localStorage.setItem('clubticketsBuyer', JSON.stringify(buyerData));
+    window.location.href = 'payment.html';
   });
 
   // Cart interaction simulation
@@ -80,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (removeEventBtn) {
     removeEventBtn.addEventListener('click', () => {
       if (cartItemsContainer) {
-        cartItemsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #777;">El carrito está vacío.</div>';
+        cartItemsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #777;">Your cart is empty.</div>';
         updateCartTotal('0,00 €');
       }
     });
@@ -89,9 +163,56 @@ document.addEventListener('DOMContentLoaded', () => {
   if (clearCartBtn) {
     clearCartBtn.addEventListener('click', () => {
       if (cartItemsContainer) {
-        cartItemsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #777;">El carrito está vacío.</div>';
+        cartItemsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #777;">Your cart is empty.</div>';
         updateCartTotal('0,00 €');
       }
     });
   }
+
+  // Render dynamic cart from localStorage
+  function renderCart() {
+    const cartData = JSON.parse(localStorage.getItem('clubticketsCart') || 'null');
+    if (!cartData || !cartItemsContainer) return;
+
+    const { event, tickets } = cartData;
+    let total = 0;
+
+    const ticketRowsHtml = tickets.map(t => {
+      total += t.qty * t.price;
+      return `
+        <div class="cart-item-row">
+          <div class="cart-item-desc">
+            <span class="cart-item-qty">${t.qty} x</span>
+            <span class="cart-item-name">${t.name}</span>
+            <button class="icon-btn remove-item-btn" type="button" aria-label="Remove ticket">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="cart-item-price">${(t.qty * t.price).toFixed(2).replace('.', ',')} €</div>
+        </div>
+      `;
+    }).join('');
+
+    cartItemsContainer.innerHTML = `
+      <div class="cart-event-block">
+        <div class="cart-event-title-row">
+          <span class="cart-event-date">${event.date}</span>
+        </div>
+        <div class="cart-event-details">
+          <p class="cart-event-venue">${event.venue}</p>
+          <p class="cart-event-artist">${event.artist}</p>
+        </div>
+      </div>
+      ${ticketRowsHtml}
+    `;
+
+    if (cartTotalVal) {
+      cartTotalVal.textContent = `${total.toFixed(2).replace('.', ',')} €`;
+    }
+  }
+
+  renderCart();
 });

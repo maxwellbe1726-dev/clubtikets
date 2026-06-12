@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
     <a class="brand" href="index.html" aria-label="Clubtickets">
       <img src="img/logo-header_biza.svg" alt="Clubtickets">
     </a>
-    <button class="ticket-menu" type="button" aria-label="Menú">
+    <button class="ticket-menu" type="button" aria-label="Menu">
       <img src="img/logo-menu_biza.svg" alt="">
     </button>
   </header>
@@ -21,29 +21,33 @@
       <!-- Left Column: Forms -->
       <div class="checkout-left">
         <section class="checkout-card buyer-info-card">
-          <h2>Datos comprador</h2>
+          <h2>Buyer details</h2>
           <p class="buyer-info-desc">
-            El nombre y apellidos del comprador será impreso en las entradas. 
-            <strong>Es obligatorio que el comprador acuda al evento con el grupo.</strong>
+            The buyer's name and surname will be printed on the tickets.
+            <strong>The buyer must attend the event with the group.</strong>
           </p>
 
           <form id="buyerForm" class="buyer-form">
             <div class="form-row">
-              <input type="text" id="nombre" placeholder="Nombre" required>
-              <input type="text" id="apellidos" placeholder="Apellidos" required>
+              <input type="text" id="nombre" placeholder="First name" required>
+              <input type="text" id="apellidos" placeholder="Last name" required>
             </div>
             
             <div class="form-row">
-              <input type="email" id="email" placeholder="ejemplo@gmail.com" required>
-              <input type="email" id="confirmEmail" placeholder="Confirmar email" required>
+              <input type="email" id="email" placeholder="example@gmail.com" required>
+              <input type="email" id="confirmEmail" placeholder="Confirm email" required>
             </div>
 
             <div class="phone-input-container">
-              <div class="country-select" id="countrySelect">
-                <span class="flag">🇬🇧</span>
-                <span class="dropdown-arrow">▼</span>
+              <div class="country-select-wrapper">
+                <div class="country-select" id="countrySelect">
+                  <span class="flag" id="selectedFlag">🇬🇧</span>
+                  <span class="dial-code" id="selectedDial">+44</span>
+                  <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="country-dropdown" id="countryDropdown"></div>
               </div>
-              <input type="tel" id="telefono" placeholder="Teléfono" required>
+              <input type="tel" id="telefono" placeholder="Phone" required>
             </div>
 
             <div class="consent-checkboxes">
@@ -51,7 +55,7 @@
                 <input type="checkbox" id="consentMarketing">
                 <span class="checkbox-circle"></span>
                 <span class="checkbox-text">
-                  Acepto recibir ofertas, descuentos y comunicación comercial por cualquier medio de parte de los Co-responsables de Tratamiento: Only Tickets SL, Ushuaïa Entertainments SL y The Night League SL
+                  I agree to receive offers, discounts and commercial communication by any means from the Joint Controllers: Only Tickets SL, Ushuaïa Entertainments SL and The Night League SL
                 </span>
               </label>
 
@@ -59,18 +63,18 @@
                 <input type="checkbox" id="consentTerms" required>
                 <span class="checkbox-circle"></span>
                 <span class="checkbox-text">
-                  Acepto los <a href="#" target="_blank">Términos y Condiciones de Clubtickets</a> y los <a href="#" target="_blank">Términos y Condiciones de Ushuaïa Entertainment</a>
+                  I accept the <a href="#" target="_blank">Clubtickets Terms and Conditions</a> and the <a href="#" target="_blank">Ushuaïa Entertainment Terms and Conditions</a>
                 </span>
               </label>
             </div>
 
-            <button type="submit" class="submit-btn" id="submitBtn" disabled>Continuar</button>
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>Continue</button>
           </form>
         </section>
 
         <!-- Collapsed Payment Section -->
         <section class="checkout-card collapsed-payment-card">
-          <h2>Método de pago</h2>
+          <h2>Payment method</h2>
         </section>
       </div>
 
@@ -78,12 +82,12 @@
       <div class="checkout-right">
         <section class="checkout-card cart-card">
           <div class="cart-header-action">
-            <a href="entradas.html" class="continue-shopping-btn">Continuar comprando</a>
+            <a href="entradas.html" class="continue-shopping-btn">Continue shopping</a>
           </div>
 
           <div class="cart-title-row">
-            <h2>Contenido del carrito</h2>
-            <button class="icon-btn clear-cart-btn" type="button" aria-label="Vaciar carrito">
+            <h2>Cart contents</h2>
+            <button class="icon-btn clear-cart-btn" type="button" aria-label="Empty cart">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -97,8 +101,8 @@
             <!-- Event header block -->
             <div class="cart-event-block">
               <div class="cart-event-title-row">
-                <span class="cart-event-date">sáb 13 jun</span>
-                <button class="icon-btn remove-event-btn" type="button" aria-label="Eliminar evento">
+                <span class="cart-event-date">Sat 13 Jun</span>
+                <button class="icon-btn remove-event-btn" type="button" aria-label="Remove event">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 6 5 6 21 6"></polyline>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -116,7 +120,7 @@
               <div class="cart-item-desc">
                 <span class="cart-item-qty">1 x</span>
                 <span class="cart-item-name">Entry before 1am - 1st Release</span>
-                <button class="icon-btn remove-item-btn" type="button" aria-label="Eliminar entrada">
+                <button class="icon-btn remove-item-btn" type="button" aria-label="Remove ticket">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="3 6 5 6 21 6"></polyline>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -138,6 +142,12 @@
     </div>
   </main>
 
+  <button class="chat" aria-label="Help">
+    <img src="img/bizar-help.webp" alt="Help">
+  </button>
+  <button class="cookies" aria-label="Cookies">
+    <img src="img/cookies_biza.png" alt="Cookies">
+  </button>
   <script src="checkout.js"></script>
 </body>
 </html>

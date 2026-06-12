@@ -9,6 +9,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const checkoutBtn = footer.querySelector('.checkout-footer-btn');
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
+      const selectedTickets = [];
+      ticketRows.forEach(row => {
+        const nameEl = row.querySelector('h3');
+        const priceEl = row.querySelector('strong');
+        const qtySpan = row.querySelector('.quantity span');
+        if (nameEl && priceEl && qtySpan) {
+          const qty = parseInt(qtySpan.textContent, 10) || 0;
+          if (qty > 0) {
+            selectedTickets.push({
+              name: nameEl.childNodes[0].textContent.trim(),
+              qty: qty,
+              price: parseFloat(priceEl.textContent.replace('€', '').trim()) || 0
+            });
+          }
+        }
+      });
+      const cartData = {
+        event: {
+          date: 'Sat 13 Jun',
+          venue: 'Hï Ibiza',
+          artist: 'Black Coffee'
+        },
+        tickets: selectedTickets
+      };
+      localStorage.setItem('clubticketsCart', JSON.stringify(cartData));
       window.location.href = 'checkout.html';
     });
   }
